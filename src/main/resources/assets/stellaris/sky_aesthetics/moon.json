@@ -1,0 +1,11 @@
+{
+  "sky_objects": [
+  ],
+  "weather": false,
+  "world": "disabled:disabled",
+  "id": "stellaris:moon",
+  "cloud_settings": {
+    "cloud": false,
+    "cloud_height": 0
+  }
+}
