@@ -9,6 +9,8 @@ Disables Stellaris custom sky and configures StellarView for the planets.
 ## Notes
 Dev notes, problems, TODOs, etc.
 
+- Some celestials/star fields are visible through planets
+
 ### Orbits
 [Earth Celestials](src/main/resources/assets/stellaris/stellarview/celestials/planet/milky_way/sol/earth_orbit.json)  
 [Earth View center](src/main/resources/assets/stellaris/stellarview/view_centers/earth_orbit.json)  
