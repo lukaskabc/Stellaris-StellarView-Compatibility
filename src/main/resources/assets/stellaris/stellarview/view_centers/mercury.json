@@ -1,9 +1,9 @@
 {
 	"view_center": "stellarview:planet/milky_way/sol/mercury",
 	"axis_rotation": {
-		"x_axis": 0,
-		"y_axis": -90,
-		"z_axis": -90
+		"x_axis": 85,
+		"y_axis": 0,
+		"z_axis": 190
 	},
 	"day_blending": {
 		"max_brightness": 1,

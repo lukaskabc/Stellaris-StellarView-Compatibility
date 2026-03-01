@@ -20,3 +20,6 @@ requirements:
 2. Dont know how to do it in a way that will respect the day/night cycle with respect to Sun and Luna position in the sky
 
 **The same applies to other orbits mars_orbit, venus_orbit and mercury_orbit**
+
+### Planets
+Daylight cycle on planets does not reflect the sun position

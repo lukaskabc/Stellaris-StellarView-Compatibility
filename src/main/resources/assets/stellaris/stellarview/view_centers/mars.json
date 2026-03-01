@@ -1,9 +1,9 @@
 {
 	"view_center": "stellarview:planet/milky_way/sol/mars",
 	"axis_rotation": {
-		"x_axis": 0,
-		"y_axis": -90,
-		"z_axis": -90
+		"x_axis": -120,
+		"y_axis": -120,
+		"z_axis": -120
 	},
 	"day_blending": {
 		"max_brightness": 1,
