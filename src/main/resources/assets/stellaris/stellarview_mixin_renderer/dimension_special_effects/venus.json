@@ -1,0 +1,6 @@
+{
+    "has_snow_and_rain": false,
+    "has_sunrise": false,
+    "force_bright_lightmap": false,
+    "constant_ambient_light": false
+}
