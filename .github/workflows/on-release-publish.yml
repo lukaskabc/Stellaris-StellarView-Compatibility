@@ -71,7 +71,9 @@ jobs:
           modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
           files: ${{ env.MOD_PRIMARY_FILE_GLOB }}
           version-type: ${{ env.VERSION_TYPE }}
-          loaders: ${{ env.MOD_LOADER }}
+          loaders: |
+            minecraft
+            ${{ env.MOD_LOADER }}
           game-versions: ${{ env.GAME_VERSIONS }}
           game-version-filter: ${{ env.GAME_VERSION_FILTER }}
           java: ${{ env.JAVA_VERSION }}
