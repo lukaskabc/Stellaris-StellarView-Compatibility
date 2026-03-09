@@ -18,10 +18,6 @@ permissions:
 env:
   # COMMON PARAMETERS
   JAVA_VERSION: 21
-  GAME_VERSIONS: |
-    [1.21.1]
-  GAME_VERSION_FILTER: releases
-  VERSION_TYPE: release
   MOD_ID: stellaris_stellarview_compatibility
 
   # MOD VARIANT
@@ -33,7 +29,7 @@ env:
 
 jobs:
   version:
-    name: Resolves the version from the release tag
+    name: Resolves the version from the workflow input
     runs-on: ubuntu-slim
     outputs:
       # the version will be available as ${{ needs.version.outputs.version }} in dependent jobs
@@ -64,7 +60,7 @@ jobs:
 
       - name: Prepare Resource Pack files
         run: |
-          mv src/main/templates/assets ${{ env.DIRECTORY }}/assets
+          mv src/main/resources/assets ${{ env.DIRECTORY }}/assets
 
       - name: Append version to pack.mcmeta
         run: |
@@ -137,3 +133,4 @@ jobs:
           draft: true
           # attach all files from the directory
           files: release-artifacts/*
+          fail_on_unmatched_files: true
