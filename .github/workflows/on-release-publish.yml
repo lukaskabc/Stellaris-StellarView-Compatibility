@@ -10,7 +10,7 @@ env:
   GH_TOKEN: ${{ github.token }}
   JAVA_VERSION: 21
   GAME_VERSIONS: |
-    [1.21.1]
+    1.21.1
   GAME_VERSION_FILTER: releases
   VERSION_TYPE: release
 
@@ -45,7 +45,8 @@ jobs:
           modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
           files: ${{ env.RESOURCEPACK_PRIMARY_FILE_GLOB }}
           version-type: ${{ env.VERSION_TYPE }}
-          loaders: minecraft
+          loaders: |
+            minecraft
           game-versions: ${{ env.GAME_VERSIONS }}
           game-version-filter: ${{ env.GAME_VERSION_FILTER }}
           java: ${{ env.JAVA_VERSION }}
@@ -91,9 +92,10 @@ jobs:
         with:
           curseforge-id: 1482062
           curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
-          files: artifacts/${{ env.RESOURCEPACK_PRIMARY_FILE_GLOB }}
+          files: ${{ env.RESOURCEPACK_PRIMARY_FILE_GLOB }}
           version-type: ${{ env.VERSION_TYPE }}
-          loaders: minecraft
+          loaders: |
+            minecraft
           game-versions: ${{ env.GAME_VERSIONS }}
           game-version-filter: ${{ env.GAME_VERSION_FILTER }}
           java: ${{ env.JAVA_VERSION }}
@@ -115,7 +117,7 @@ jobs:
         with:
           curseforge-id: 1482048
           curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
-          files: artifacts/${{ env.MOD_PRIMARY_FILE_GLOB }}
+          files: ${{ env.MOD_PRIMARY_FILE_GLOB }}
           version-type: ${{ env.VERSION_TYPE }}
           loaders: ${{ env.MOD_LOADER }}
           game-versions: ${{ env.GAME_VERSIONS }}
