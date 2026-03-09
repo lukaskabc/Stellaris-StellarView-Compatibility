@@ -6,6 +6,8 @@ on:
 
 env:
   # COMMON PARAMETERS
+  # github token required for GH CLI
+  GH_TOKEN: ${{ github.token }}
   JAVA_VERSION: 21
   GAME_VERSIONS: |
     [1.21.1]
@@ -33,10 +35,6 @@ jobs:
       - name: Download artifacts
         run: |
           gh release download ${{ github.event.release.tag_name }} --pattern "${{ env.RESOURCEPACK_PRIMARY_FILE_GLOB }}"
-        env:
-          GITHUB_TOKEN: ${{ github.token }}
-          OWNER: ${{ github.repository_owner }}
-          REPO: ${{ github.event.repository.name }}
 
       - name: Publish to Modrinth
         uses: Kir-Antipov/mc-publish@v3
@@ -60,10 +58,6 @@ jobs:
       - name: Download artifacts
         run: |
           gh release download ${{ github.event.release.tag_name }} --pattern "${{ env.MOD_PRIMARY_FILE_GLOB }}"
-        env:
-          GITHUB_TOKEN: ${{ github.token }}
-          OWNER: ${{ github.repository_owner }}
-          REPO: ${{ github.event.repository.name }}
 
       - name: Publish to Modrinth
         uses: Kir-Antipov/mc-publish@v3
@@ -85,10 +79,6 @@ jobs:
       - name: Download artifacts
         run: |
           gh release download ${{ github.event.release.tag_name }} --pattern "${{ env.RESOURCEPACK_PRIMARY_FILE_GLOB }}"
-        env:
-          GITHUB_TOKEN: ${{ github.token }}
-          OWNER: ${{ github.repository_owner }}
-          REPO: ${{ github.event.repository.name }}
 
       - name: Publish to CurseForge
         uses: Kir-Antipov/mc-publish@v3.3
@@ -111,10 +101,6 @@ jobs:
       - name: Download artifacts
         run: |
           gh release download ${{ github.event.release.tag_name }} --pattern "${{ env.MOD_PRIMARY_FILE_GLOB }}"
-        env:
-          GITHUB_TOKEN: ${{ github.token }}
-          OWNER: ${{ github.repository_owner }}
-          REPO: ${{ github.event.repository.name }}
 
       - name: Publish to CurseForge
         uses: Kir-Antipov/mc-publish@v3.3
