@@ -34,7 +34,9 @@ jobs:
     steps:
       - name: Download artifacts
         run: |
-          gh release download ${{ github.event.release.tag_name }} --pattern "${{ env.RESOURCEPACK_PRIMARY_FILE_GLOB }}"
+          gh release download ${{ github.event.release.tag_name }} \
+          --repo ${{ github.repository }} \
+          --pattern "${{ env.RESOURCEPACK_PRIMARY_FILE_GLOB }}"
 
       - name: Publish to Modrinth
         uses: Kir-Antipov/mc-publish@v3
@@ -57,7 +59,9 @@ jobs:
     steps:
       - name: Download artifacts
         run: |
-          gh release download ${{ github.event.release.tag_name }} --pattern "${{ env.MOD_PRIMARY_FILE_GLOB }}"
+          gh release download ${{ github.event.release.tag_name }} \
+          --repo ${{ github.repository }} \
+          --pattern "${{ env.RESOURCEPACK_PRIMARY_FILE_GLOB }}"
 
       - name: Publish to Modrinth
         uses: Kir-Antipov/mc-publish@v3
@@ -78,7 +82,9 @@ jobs:
     steps:
       - name: Download artifacts
         run: |
-          gh release download ${{ github.event.release.tag_name }} --pattern "${{ env.RESOURCEPACK_PRIMARY_FILE_GLOB }}"
+          gh release download ${{ github.event.release.tag_name }} \
+          --repo ${{ github.repository }} \
+          --pattern "${{ env.RESOURCEPACK_PRIMARY_FILE_GLOB }}"
 
       - name: Publish to CurseForge
         uses: Kir-Antipov/mc-publish@v3.3
@@ -100,7 +106,9 @@ jobs:
     steps:
       - name: Download artifacts
         run: |
-          gh release download ${{ github.event.release.tag_name }} --pattern "${{ env.MOD_PRIMARY_FILE_GLOB }}"
+          gh release download ${{ github.event.release.tag_name }} \
+          --repo ${{ github.repository }} \
+          --pattern "${{ env.RESOURCEPACK_PRIMARY_FILE_GLOB }}"
 
       - name: Publish to CurseForge
         uses: Kir-Antipov/mc-publish@v3.3
