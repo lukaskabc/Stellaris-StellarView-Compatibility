@@ -1,0 +1,114 @@
+name: Publish to Modrinth and CurseForge on GitHub Release Publish
+
+on:
+  release:
+    types: [ published ]
+
+env:
+  # COMMON PARAMETERS
+  JAVA_VERSION: 21
+  GAME_VERSIONS: |
+    [1.21.1]
+  GAME_VERSION_FILTER: releases
+  VERSION_TYPE: release
+
+  # see https://github.com/Kira-NT/mc-publish#dependencies
+  DEPENDENCIES: |
+    stellarview_mixin_renderer(required){modrinth:gJ5LPGfO}{curseforge:1474053}
+    stellaris(required){modrinth:ItTQpuBn}{curseforge:1036270}
+    stellarview(required){modrinth:Iairjv0A}{curseforge:865273}
+
+  # MOD VARIANT
+  MOD_LOADER: neoforge
+  MOD_PRIMARY_FILE_GLOB: stellaris_stellarview_compatibility-*.jar
+
+  # RESOURCEPACK VARIANT
+  RESOURCEPACK_PRIMARY_FILE_GLOB: stellaris_stellarview_compatibility-*.zip
+
+jobs:
+  modrinth-resourcepack:
+    name: Publish resourcepack to Modrinth
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download artifacts
+        run: |
+          gh release download ${{ github.event.release.tag_name }} --pattern "${{ env.MOD_PRIMARY_FILE_GLOB }}"
+
+      - name: Publish to Modrinth
+        uses: Kir-Antipov/mc-publish@v3
+        with:
+          modrinth-id: SrNny2Go
+          modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
+          files: ${{ env.RESOURCEPACK_PRIMARY_FILE_GLOB }}
+          version-type: ${{ env.VERSION_TYPE }}
+          loaders: minecraft
+          game-versions: ${{ env.GAME_VERSIONS }}
+          game-version-filter: ${{ env.GAME_VERSION_FILTER }}
+          java: ${{ env.JAVA_VERSION }}
+          dependencies: ${{ env.DEPENDENCIES }}
+
+  modrinth-mod:
+    name: Publish mod to Modrinth
+    runs-on: ubuntu-latest
+    # when mod is published after the resourcepack, the mod will be always the latest version
+    needs: modrinth-resourcepack
+    steps:
+      - name: Download artifacts
+        run: |
+          gh release download ${{ github.event.release.tag_name }} --pattern "${{ env.MOD_PRIMARY_FILE_GLOB }}"
+
+      - name: Publish to Modrinth
+        uses: Kir-Antipov/mc-publish@v3
+        with:
+          modrinth-id: SrNny2Go
+          modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
+          files: ${{ env.MOD_PRIMARY_FILE_GLOB }}
+          version-type: ${{ env.VERSION_TYPE }}
+          loaders: ${{ env.MOD_LOADER }}
+          game-versions: ${{ env.GAME_VERSIONS }}
+          game-version-filter: ${{ env.GAME_VERSION_FILTER }}
+          java: ${{ env.JAVA_VERSION }}
+          dependencies: ${{ env.DEPENDENCIES }}
+
+  curseforge-resourcepack:
+    name: Publish resourcepack to CurseForge
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download artifacts
+        run: |
+          gh release download ${{ github.event.release.tag_name }} --pattern "${{ env.MOD_PRIMARY_FILE_GLOB }}"
+
+      - name: Publish to CurseForge
+        uses: Kir-Antipov/mc-publish@v3.3
+        with:
+          curseforge-id: 1482062
+          curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
+          files: artifacts/${{ env.RESOURCEPACK_PRIMARY_FILE_GLOB }}
+          version-type: ${{ env.VERSION_TYPE }}
+          loaders: minecraft
+          game-versions: ${{ env.GAME_VERSIONS }}
+          game-version-filter: ${{ env.GAME_VERSION_FILTER }}
+          java: ${{ env.JAVA_VERSION }}
+          dependencies: ${{ env.DEPENDENCIES }}
+
+  curseforge-mod:
+    name: Publish mod to CurseForge
+    runs-on: ubuntu-latest
+    needs: curseforge-resourcepack
+    steps:
+      - name: Download artifacts
+        run: |
+          gh release download ${{ github.event.release.tag_name }} --pattern "${{ env.MOD_PRIMARY_FILE_GLOB }}"
+
+      - name: Publish to CurseForge
+        uses: Kir-Antipov/mc-publish@v3.3
+        with:
+          curseforge-id: 1482048
+          curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
+          files: artifacts/${{ env.MOD_PRIMARY_FILE_GLOB }}
+          version-type: ${{ env.VERSION_TYPE }}
+          loaders: ${{ env.MOD_LOADER }}
+          game-versions: ${{ env.GAME_VERSIONS }}
+          game-version-filter: ${{ env.GAME_VERSION_FILTER }}
+          java: ${{ env.JAVA_VERSION }}
+          dependencies: ${{ env.DEPENDENCIES }}
