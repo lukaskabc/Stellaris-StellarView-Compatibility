@@ -1,0 +1,104 @@
+name: Compile and attach to Github release DRAFT
+# The action is triggered when a release DRAFT is created
+# It compiles the code and attaches the artifacts to the release DRAFT
+# The tag of the release must follow format vX.Y.Z (e.g. v1.0.0)
+# The extracted version (X.Y.Z) will be used for gradle.properties and for resulting artifact names
+on:
+  release:
+    types: [ created ]
+
+env:
+  # COMMON PARAMETERS
+  JAVA_VERSION: 21
+  GAME_VERSIONS: |
+    [1.21.1]
+  GAME_VERSION_FILTER: releases
+  VERSION_TYPE: release
+  MOD_ID: stellaris_stellarview_compatibility
+
+  # MOD VARIANT
+  MOD_LOADER: neoforge
+  MOD_PRIMARY_FILE_GLOB: stellaris_stellarview_compatibility-*.jar
+
+  # RESOURCEPACK VARIANT
+  RESOURCEPACK_PRIMARY_FILE_GLOB: stellaris_stellarview_compatibility-*.zip
+
+jobs:
+  version:
+    # Only run on draft releases
+    if: github.event.release.draft == true
+    name: Resolves the version from the release tag
+    runs-on: ubuntu-slim
+    outputs:
+      # the version will be available as ${{ needs.version.outputs.tag }} in dependent jobs
+      tag: ${{ steps.extract_tag.outputs.TAG }}
+    steps:
+      - id: extract_tag
+        name: Extract version from the release tag
+        run: |
+          TAG="${{ github.event.release.tag_name }}"
+          if [[ "$TAG" == v* ]]; then
+            TAG=${TAG:1}
+          fi
+          echo "TAG=$TAG" >> $GITHUB_OUTPUT
+
+  build-resourcepack:
+    name: Build Resource Pack ZIP artifact
+    runs-on: ubuntu-latest
+    needs: [version]
+    env:
+      DIRECTORY: src/main/templates/resourcepack
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v5
+
+      - name: Prepare Resource Pack files
+        run: |
+          mv src/main/templates/assets ${{ env.DIRECTORY }}/assets
+
+      - name: Append version to pack.mcmeta
+        run: |
+          cd ${{ env.DIRECTORY }}
+          jq --arg version "${{ needs.version.outputs.tag }}" '.pack.description += " Version: v" + $version' pack.mcmeta > pack.mcmeta.tmp
+          mv pack.mcmeta.tmp pack.mcmeta
+
+      - name: Create Resource Pack ZIP
+        run: |
+          cd ${{ env.DIRECTORY }}
+          zip -r ${{ env.MOD_ID }}-${{ needs.version.outputs.tag }}.zip .
+
+      - name: Upload Resource Pack to Draft Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: ${{ env.DIRECTORY }}/${{ env.RESOURCEPACK_PRIMARY_FILE_GLOB }}
+
+  build-jar:
+    name: Build mod JAR artifact
+    runs-on: ubuntu-slim
+    needs: [version]
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v5
+
+      - name: Setup Java
+        uses: actions/setup-java@v5
+        with:
+          distribution: 'zulu'
+          java-version: ${{ env.JAVA_VERSION }}
+          cache: 'gradle'
+
+      - name: Set execution permissions for Gradle wrapper
+        run: chmod +x gradlew
+
+      - name: Set version in gradle.properties
+        # replaces the mod_version property in gradle.properties with the extracted TAG version
+        run: |
+          sed -i "s/^mod_version=.*/mod_version=${{ needs.version.outputs.tag }}-${{ env.MOD_LOADER }}/" gradle.properties
+
+      - name: Build Mod JAR
+        run: ./gradlew build
+
+      - name: Upload JAR to Release Draft
+        uses: softprops/action-gh-release@v2
+        with:
+          files: build/libs/${{ env.MOD_PRIMARY_FILE_GLOB }}
