@@ -1,4 +1,4 @@
-name: Compile and attach to Github release DRAFT
+name: Create Draft Release with Artifacts
 # The action must be manually triggered and provided with the version number
 # It will create a new draft release with the provided version as a tag
 # The version will be used in gradle.properties to build the mod JAR and resourcepack ZIP
