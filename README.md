@@ -1,6 +1,6 @@
 # Stellaris StellarView Compatibility
-[![Modrinth](https://img.shields.io/modrinth/dt/stellaris-stellarview-compatibility?style=for-the-badge&logo=modrinth&color=626e7b&label=Modrinth)](https://modrinth.com/mod/stellaris-stellarview-compatibility)
-[![Modrinth](https://img.shields.io/modrinth/dt/stellaris-stellarview-compatibility-resourcepack?style=for-the-badge&logo=modrinth&color=626e7b&label=Modrinth%20resourcepack)](https://modrinth.com/resourcepack/stellaris-stellarview-compatibility-resourcepack)
+[![Modrinth](https://img.shields.io/modrinth/dt/SrNny2Go?style=for-the-badge&logo=modrinth&color=626e7b&label=Modrinth)](https://modrinth.com/mod/stellaris-stellarview-compatibility)
+[![Modrinth](https://img.shields.io/modrinth/dt/g8L9U4Pb?style=for-the-badge&logo=modrinth&color=626e7b&label=Modrinth%20resourcepack)](https://modrinth.com/resourcepack/stellaris-stellarview-compatibility-resourcepack)
 <a href="https://curseforge.com/minecraft/mc-mods/stellaris-stellarview-compatibility" target="_blank"><img src="https://img.shields.io/curseforge/dt/1482048?style=for-the-badge&logo=curseforge&color=626e7b&label=CurseForge" alt="Curseforge"></a>
 <a href="https://curseforge.com/minecraft/texture-packs/stellaris-stellarview-compatibility-resourcepack" target="_blank"><img src="https://img.shields.io/curseforge/dt/1482062?style=for-the-badge&logo=curseforge&color=626e7b&label=Curseforge%20Resourcepack" alt="Curseforge"></a>
 
