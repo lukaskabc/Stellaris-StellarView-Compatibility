@@ -41,12 +41,11 @@ jobs:
       - name: Publish to Modrinth
         uses: Kir-Antipov/mc-publish@v3
         with:
-          modrinth-id: SrNny2Go
+          modrinth-id: g8L9U4Pb
           modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
           files: ${{ env.RESOURCEPACK_PRIMARY_FILE_GLOB }}
           version-type: ${{ env.VERSION_TYPE }}
-          loaders: |
-            minecraft
+          loaders: minecraft
           game-versions: ${{ env.GAME_VERSIONS }}
           game-version-filter: ${{ env.GAME_VERSION_FILTER }}
           java: ${{ env.JAVA_VERSION }}
@@ -71,57 +70,55 @@ jobs:
           modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
           files: ${{ env.MOD_PRIMARY_FILE_GLOB }}
           version-type: ${{ env.VERSION_TYPE }}
-          loaders: |
-              ${{ env.MOD_LOADER }}
+          loaders: ${{ env.MOD_LOADER }}
           game-versions: ${{ env.GAME_VERSIONS }}
           game-version-filter: ${{ env.GAME_VERSION_FILTER }}
           java: ${{ env.JAVA_VERSION }}
           dependencies: ${{ env.DEPENDENCIES }}
 
-#  curseforge-resourcepack:
-#    name: Publish resourcepack to CurseForge
-#    runs-on: ubuntu-slim
-#    steps:
-#      - name: Download artifacts
-#        run: |
-#          gh release download ${{ github.event.release.tag_name }} \
-#          --repo ${{ github.repository }} \
-#          --pattern "${{ env.RESOURCEPACK_PRIMARY_FILE_GLOB }}"
-#
-#      - name: Publish to CurseForge
-#        uses: Kir-Antipov/mc-publish@v3.3
-#        with:
-#          curseforge-id: 1482062
-#          curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
-#          files: ${{ env.RESOURCEPACK_PRIMARY_FILE_GLOB }}
-#          version-type: ${{ env.VERSION_TYPE }}
-#          loaders: |
-#            minecraft
-#          game-versions: ${{ env.GAME_VERSIONS }}
-#          game-version-filter: ${{ env.GAME_VERSION_FILTER }}
-#          java: ${{ env.JAVA_VERSION }}
-#          dependencies: ${{ env.DEPENDENCIES }}
-#
-#  curseforge-mod:
-#    name: Publish mod to CurseForge
-#    runs-on: ubuntu-slim
-#    needs: curseforge-resourcepack
-#    steps:
-#      - name: Download artifacts
-#        run: |
-#          gh release download ${{ github.event.release.tag_name }} \
-#          --repo ${{ github.repository }} \
-#          --pattern "${{ env.MOD_PRIMARY_FILE_GLOB }}"
-#
-#      - name: Publish to CurseForge
-#        uses: Kir-Antipov/mc-publish@v3.3
-#        with:
-#          curseforge-id: 1482048
-#          curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
-#          files: ${{ env.MOD_PRIMARY_FILE_GLOB }}
-#          version-type: ${{ env.VERSION_TYPE }}
-#          loaders: ${{ env.MOD_LOADER }}
-#          game-versions: ${{ env.GAME_VERSIONS }}
-#          game-version-filter: ${{ env.GAME_VERSION_FILTER }}
-#          java: ${{ env.JAVA_VERSION }}
-#          dependencies: ${{ env.DEPENDENCIES }}
+  curseforge-resourcepack:
+    name: Publish resourcepack to CurseForge
+    runs-on: ubuntu-slim
+    steps:
+      - name: Download artifacts
+        run: |
+          gh release download ${{ github.event.release.tag_name }} \
+          --repo ${{ github.repository }} \
+          --pattern "${{ env.RESOURCEPACK_PRIMARY_FILE_GLOB }}"
+
+      - name: Publish to CurseForge
+        uses: Kir-Antipov/mc-publish@v3.3
+        with:
+          curseforge-id: 1482062
+          curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
+          files: ${{ env.RESOURCEPACK_PRIMARY_FILE_GLOB }}
+          version-type: ${{ env.VERSION_TYPE }}
+          loaders: minecraft
+          game-versions: ${{ env.GAME_VERSIONS }}
+          game-version-filter: ${{ env.GAME_VERSION_FILTER }}
+          java: ${{ env.JAVA_VERSION }}
+          dependencies: ${{ env.DEPENDENCIES }}
+
+  curseforge-mod:
+    name: Publish mod to CurseForge
+    runs-on: ubuntu-slim
+    needs: curseforge-resourcepack
+    steps:
+      - name: Download artifacts
+        run: |
+          gh release download ${{ github.event.release.tag_name }} \
+          --repo ${{ github.repository }} \
+          --pattern "${{ env.MOD_PRIMARY_FILE_GLOB }}"
+
+      - name: Publish to CurseForge
+        uses: Kir-Antipov/mc-publish@v3.3
+        with:
+          curseforge-id: 1482048
+          curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
+          files: ${{ env.MOD_PRIMARY_FILE_GLOB }}
+          version-type: ${{ env.VERSION_TYPE }}
+          loaders: ${{ env.MOD_LOADER }}
+          game-versions: ${{ env.GAME_VERSIONS }}
+          game-version-filter: ${{ env.GAME_VERSION_FILTER }}
+          java: ${{ env.JAVA_VERSION }}
+          dependencies: ${{ env.DEPENDENCIES }}
