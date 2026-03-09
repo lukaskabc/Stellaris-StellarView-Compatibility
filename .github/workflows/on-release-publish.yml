@@ -33,6 +33,8 @@ jobs:
       - name: Download artifacts
         run: |
           gh release download ${{ github.event.release.tag_name }} --pattern "${{ env.MOD_PRIMARY_FILE_GLOB }}"
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
 
       - name: Publish to Modrinth
         uses: Kir-Antipov/mc-publish@v3
@@ -56,6 +58,8 @@ jobs:
       - name: Download artifacts
         run: |
           gh release download ${{ github.event.release.tag_name }} --pattern "${{ env.MOD_PRIMARY_FILE_GLOB }}"
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
 
       - name: Publish to Modrinth
         uses: Kir-Antipov/mc-publish@v3
@@ -77,6 +81,8 @@ jobs:
       - name: Download artifacts
         run: |
           gh release download ${{ github.event.release.tag_name }} --pattern "${{ env.MOD_PRIMARY_FILE_GLOB }}"
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
 
       - name: Publish to CurseForge
         uses: Kir-Antipov/mc-publish@v3.3
@@ -99,6 +105,8 @@ jobs:
       - name: Download artifacts
         run: |
           gh release download ${{ github.event.release.tag_name }} --pattern "${{ env.MOD_PRIMARY_FILE_GLOB }}"
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
 
       - name: Publish to CurseForge
         uses: Kir-Antipov/mc-publish@v3.3
