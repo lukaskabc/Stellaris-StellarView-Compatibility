@@ -61,7 +61,7 @@ jobs:
         run: |
           gh release download ${{ github.event.release.tag_name }} \
           --repo ${{ github.repository }} \
-          --pattern "${{ env.RESOURCEPACK_PRIMARY_FILE_GLOB }}"
+          --pattern "${{ env.MOD_PRIMARY_FILE_GLOB }}"
 
       - name: Publish to Modrinth
         uses: Kir-Antipov/mc-publish@v3
@@ -108,7 +108,7 @@ jobs:
         run: |
           gh release download ${{ github.event.release.tag_name }} \
           --repo ${{ github.repository }} \
-          --pattern "${{ env.RESOURCEPACK_PRIMARY_FILE_GLOB }}"
+          --pattern "${{ env.MOD_PRIMARY_FILE_GLOB }}"
 
       - name: Publish to CurseForge
         uses: Kir-Antipov/mc-publish@v3.3
